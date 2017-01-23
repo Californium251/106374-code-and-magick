@@ -1,42 +1,63 @@
 window.renderStatistics = function(ctx, names, times) {
-  var ctxWidth = 420;
-  var ctxHeight = 270;
-  var ctxPositionX = 100;
-  var ctxPositionY = 10;
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.fillRect(ctxPositionX + 10, ctxPositionY + 10, ctxWidth, ctxHeight);
-  ctx.fillStyle = 'rgb(255, 255, 255)';
-  ctx.fillRect(ctxPositionX, ctxPositionY, ctxWidth, ctxHeight);
-  ctx.fontStyle = '16px PT Mono';
-  ctx.fillStyle = 'rgb(0, 0, 0)';
-  ctx.fillText("Ура, Вы победили!", 150, 40);
-  ctx.fillText("Список результатов:", 150, 60);
-  var bestResult = 0;
-  var findBestResult = function(times){
-    for (var i = 0; i < times.length; i++) {
-      if (times[i] > bestResult) bestResult = times[i];
-    }
-    return bestResult;
+  var CHART_HEIGHT = 110;
+  var COL_WIDTH = 40;
+  var SPACE_BETWEEN = 50;
+  var FIRST_COL_POSITION = 150;
+  var BUBBLE_POS_X = 100;
+  var BUBBLE_POS_Y = 10;
+  var BUBBLE_WIDTH = 420;
+  var BUBBLE_HEIGHT = 270;
+  var BUBBLE_COLOR = 'rgb(255, 255, 255)';
+  var BUBBLE_SHADOW_COLOR = 'rgba(0, 0, 0, 0.7)';
+  var WELCOME_TEXT = 'Ура вы победили!\nСписок результатов:';
+  var TEXT_STYLE = '16px PT Mono';
+  var TEXT_COLOR = 'rgb(0, 0, 0)';
+  var BUBBLE_PADDING_X = 20;
+  var BUBBLE_PADDING_Y = 40;
+  var INTERLINE_SPACING = 20;
+  function createBubble (x, y, width, height, color, shadowColor) {
+    ctx.fillStyle = shadowColor;
+    ctx.fillRect(x + 10, y + 10, width, height);
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
   };
-  var setScale = function() {
-    var scale = 110 / findBestResult(times);
-    return scale;
-  }
-  var newColumn = function(name, result, colNumber) {
-    function randomColor() {
-      return 'rgb(' + Math.floor(Math.random() * 255) + ', ' + Math.floor(Math.random() * 255) + ', ' + Math.floor(Math.random() * 255) + ')';
+  function typeText(textValue, textStyle, textColor, x, y) {
+    ctx.fillStyle = textColor;
+    ctx.fontStyle = textStyle;
+    var arr = textValue.split('\n');
+    for (var i = 0; i < arr.length; i++) {
+      ctx.fillText(arr[i], x, y + i * INTERLINE_SPACING);
     }
-    var setX = function(colNumber) {
-      return 150 + (colNumber - 1)  * 90;
+  };
+  function newColumn(name, result, colNumber) {
+    var setScale = function(chartHeight) {
+      function findBestResult(times) {
+        var bestResult = 0;
+        for (var i = 0; i < times.length; i++) {
+          bestResult = times[i] > bestResult ? times[i] : bestResult;
+        }
+        return bestResult;
+      };
+      var scale = chartHeight / findBestResult(times);
+      return scale;
     };
-    var columnHeight = setScale() * result;
-    ctx.fillStyle = randomColor();
+    function setColor(name) {
+      var color = name === 'Вы' ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)';
+      return color;
+    };
+    function setX(colNumber) {
+      return FIRST_COL_POSITION + (colNumber - 1) * (COL_WIDTH + SPACE_BETWEEN);
+    };
+    var columnHeight = setScale(CHART_HEIGHT) * result;
+    ctx.fillStyle = setColor(name);
     ctx.fillRect(setX(colNumber), 230 - columnHeight, 50, columnHeight);
     ctx.fillStyle = 'rgb(0, 0, 0)';
     ctx.fillText(Math.floor(result), setX(colNumber), 220 - columnHeight);
     ctx.fillText(name, setX(colNumber),250);
   };
+  createBubble(BUBBLE_POS_X, BUBBLE_POS_Y, BUBBLE_WIDTH, BUBBLE_HEIGHT, BUBBLE_COLOR, BUBBLE_SHADOW_COLOR);
+  typeText(WELCOME_TEXT, TEXT_STYLE, TEXT_COLOR, BUBBLE_POS_X + BUBBLE_PADDING_X, BUBBLE_POS_Y + BUBBLE_PADDING_Y);
   for (var i = 0; i < names.length; i++) {
     newColumn(names[i], times[i], i + 1);
-}
+  };
 };

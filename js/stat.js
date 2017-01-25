@@ -68,5 +68,5 @@ window.renderStatistics = function(ctx, names, times) {
   typeText(TEXT, BUBBLE, ctx);
   for (var i = 0; i < names.length; i++) {
     newColumn(names[i], times[i], i + 1, CHART, times, ctx, COLUMN);
-  };
+  }
 };

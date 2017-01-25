@@ -1,18 +1,18 @@
-'use strict'
+'use strict';
 
-function createBubble (x, y, width, height, color, shadowColor, canvas) {
-  canvas.fillStyle = shadowColor;
-  canvas.fillRect(x + 10, y + 10, width, height);
-  canvas.fillStyle = color;
-  canvas.fillRect(x, y, width, height);
+function createBubble (bubble, canvas) {
+  canvas.fillStyle = bubble.SHADOW_COLOR;
+  canvas.fillRect(bubble.POS_X + 10, bubble.POS_Y + 10, bubble.WIDTH, bubble.HEIGHT);
+  canvas.fillStyle = bubble.COLOR;
+  canvas.fillRect(bubble.POS_X, bubble.POS_Y, bubble.WIDTH, bubble.HEIGHT);
 }
 
-function typeText(textValue, textStyle, textColor, x, y, canvas, interline) {
-  canvas.fillStyle = textColor;
-  canvas.fontStyle = textStyle;
-  var arr = textValue.split('\n');
+function typeText(text, bubble, canvas) {
+  canvas.fillStyle = text.COLOR;
+  canvas.fontStyle = text.STYLE;
+  var arr = text.WELCOME_VAL.split('\n');
   for (var i = 0; i < arr.length; i++) {
-    canvas.fillText(arr[i], x, y + i * interline);
+    canvas.fillText(arr[i], bubble.POS_X + bubble.PADDING_X, bubble.POS_Y + bubble.PADDING_Y + i * text.INTERLINE_SPACING);
   };
 }
 
@@ -25,11 +25,8 @@ function setX(colNumber, column) {
 }
 
 function newColumn(name, result, colNumber, chart, times, canvas, column) {
-  var setScale = function(chartHeight) {
-    function findBestResult(times) {
-      return Math.max.apply(null, times);
-    }
-    return chartHeight / findBestResult(times);
+  function setScale(chartHeight) {
+    return chartHeight / Math.max.apply(null, times);
   };
   var columnHeight = setScale(chart.HEIGHT) * result;
   canvas.fillStyle = setColor(name);
@@ -67,8 +64,8 @@ window.renderStatistics = function(ctx, names, times) {
     COLOR: 'rgb(0, 0, 0)',
     INTERLINE_SPACING: 20
   };
-  createBubble(BUBBLE.POS_X, BUBBLE.POS_Y, BUBBLE.WIDTH, BUBBLE.HEIGHT, BUBBLE.COLOR, BUBBLE.SHADOW_COLOR, ctx);
-  typeText(TEXT.WELCOME_VAL, TEXT.STYLE, TEXT.COLOR, BUBBLE.POS_X + BUBBLE.PADDING_X, BUBBLE.POS_Y + BUBBLE.PADDING_Y, ctx, TEXT.INTERLINE_SPACING);
+  createBubble(BUBBLE, ctx);
+  typeText(TEXT, BUBBLE, ctx);
   for (var i = 0; i < names.length; i++) {
     newColumn(names[i], times[i], i + 1, CHART, times, ctx, COLUMN);
   };

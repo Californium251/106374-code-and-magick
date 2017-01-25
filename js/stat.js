@@ -13,7 +13,7 @@ function typeText(text, bubble, canvas) {
   var arr = text.WELCOME_VAL.split('\n');
   for (var i = 0; i < arr.length; i++) {
     canvas.fillText(arr[i], bubble.POS_X + bubble.PADDING_X, bubble.POS_Y + bubble.PADDING_Y + i * text.INTERLINE_SPACING);
-  };
+  }
 }
 
 function setColor(name) {
@@ -27,7 +27,7 @@ function setX(colNumber, column) {
 function newColumn(name, result, colNumber, chart, times, canvas, column) {
   function setScale(chartHeight) {
     return chartHeight / Math.max.apply(null, times);
-  };
+  }
   var columnHeight = setScale(chart.HEIGHT) * result;
   canvas.fillStyle = setColor(name);
   canvas.fillRect(setX(colNumber, column), chart.COOR_Y + chart.HEIGHT - columnHeight, column.WIDTH, columnHeight);

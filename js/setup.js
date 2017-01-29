@@ -24,17 +24,8 @@ var wizard = {
   fireball: {
     htmlNode: document.querySelector('.setup-fireball-wrap'),
     color: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
+  }
 }
-}
-
-
-setup.openButton.addEventListener('click', function(evt) {
-  if(setup.setupWindow.classList.contains('invisible')) setup.setupWindow.classList.remove('invisible');
-});  //Может функцию стоит сделать методом объекта, а листенером просто ее вызывать?
-
-setup.closeButton.addEventListener('click', function(evt) {
-  if (!(setup.setupWindow.classList.contains('invisible'))) setup.setupWindow.classList.add('invisible');
-})
 
 setup.nameField.required = true;
 setup.nameField.maxLength = 50;
@@ -43,6 +34,18 @@ function setNewColor(whatToBeChanged) {
   whatToBeChanged.htmlNode.style.fill = whatToBeChanged.color[Math.round(Math.random() * whatToBeChanged.color.length - 1)];
   return whatToBeChanged.htmlNode.style.fill;
 }
+
+setup.openButton.addEventListener('click', function() {
+  if(setup.setupWindow.classList.contains('invisible')) {
+    setup.setupWindow.classList.remove('invisible');
+  }
+});
+
+setup.closeButton.addEventListener('click', function() {
+  if (!(setup.setupWindow.classList.contains('invisible'))) {
+    setup.setupWindow.classList.add('invisible');
+  }
+});
 
 wizard.cloak.htmlNode.addEventListener('click', function(){
   setNewColor(wizard.cloak);

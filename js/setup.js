@@ -11,7 +11,6 @@ var setup = {
   nameField: document.querySelector('.setup-user-name'),
 };
 
-
 var wizard = {
   cloak: {
     htmlNode: document.querySelector('#wizard-coat'),
@@ -25,34 +24,44 @@ var wizard = {
     htmlNode: document.querySelector('.setup-fireball-wrap'),
     color: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
   }
-}
+};
+
+var INVISIBLE_CLASS = 'invisible';
 
 setup.nameField.required = true;
 setup.nameField.maxLength = 50;
 
-function setNewColor(whatToBeChanged) {
-  whatToBeChanged.htmlNode.style.fill = whatToBeChanged.color[Math.round(Math.random() * whatToBeChanged.color.length - 1)];
-  return whatToBeChanged.htmlNode.style.fill;
+function setNewColor(whatToBeChanged, colorSet) {
+  whatToBeChanged.style.fill = colorSet[Math.floor(Math.random() * colorSet.length)];
+  return whatToBeChanged.style.fill;
+}
+
+function openOrClose(window, flag, hideClassName) {
+  //flag = true - скрой. А flag = false - покажи
+  if (flag && !window.classList.contains(hideClassName)) {
+    window.classList.add(hideClassName);
+  }
+  if (!flag && window.classList.contains(hideClassName)) {
+    window.classList.remove(hideClassName);
+  }
 }
 
 setup.openButton.addEventListener('click', function() {
-  if(setup.setupWindow.classList.contains('invisible')) {
-    setup.setupWindow.classList.remove('invisible');
-  }
+  openOrClose(setup.setupWindow, false, INVISIBLE_CLASS);
 });
 
 setup.closeButton.addEventListener('click', function() {
-  if (!(setup.setupWindow.classList.contains('invisible'))) {
-    setup.setupWindow.classList.add('invisible');
-  }
+  openOrClose(setup.setupWindow, true, INVISIBLE_CLASS);
 });
 
-wizard.cloak.htmlNode.addEventListener('click', function(){
-  setNewColor(wizard.cloak);
+wizard.cloak.htmlNode.addEventListener('click', function(evt) {
+  setNewColor(wizard.cloak.htmlNode, wizard.cloak.color);
 });
-wizard.eyes.htmlNode.addEventListener('click', function() {
-  setNewColor(wizard.eyes);
+
+wizard.eyes.htmlNode.addEventListener('click', function(evt) {
+  setNewColor(wizard.eyes.htmlNode, wizard.eyes.color);
 });
-wizard.fireball.htmlNode.addEventListener('click', function(){
-  wizard.fireball.htmlNode.style.backgroundColor = setNewColor(wizard.fireball);
+
+wizard.fireball.htmlNode.addEventListener('click', function() {
+  wizard.fireball.htmlNode.style.backgroundColor = setNewColor(wizard.fireball.htmlNode, wizard.fireball.color);
 });

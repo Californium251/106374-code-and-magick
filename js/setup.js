@@ -54,11 +54,11 @@ setup.closeButton.addEventListener('click', function() {
   openOrClose(setup.setupWindow, true, INVISIBLE_CLASS);
 });
 
-wizard.cloak.htmlNode.addEventListener('click', function(evt) {
+wizard.cloak.htmlNode.addEventListener('click', function() {
   setNewColor(wizard.cloak.htmlNode, wizard.cloak.color);
 });
 
-wizard.eyes.htmlNode.addEventListener('click', function(evt) {
+wizard.eyes.htmlNode.addEventListener('click', function() {
   setNewColor(wizard.eyes.htmlNode, wizard.eyes.color);
 });
 

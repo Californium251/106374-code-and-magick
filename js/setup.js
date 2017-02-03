@@ -8,7 +8,7 @@ var setup = {
   setupWindow: document.querySelector('.setup'),
   openButton: document.querySelector('.setup-open'),
   closeButton: document.querySelector('.setup-close'),
-  nameField: document.querySelector('.setup-user-name'),
+  nameField: document.querySelector('.setup-user-name')
 };
 
 var wizard = {
@@ -31,19 +31,12 @@ var INVISIBLE_CLASS = 'invisible';
 setup.nameField.required = true;
 setup.nameField.maxLength = 50;
 
-function setNewColor(whatToBeChanged, colorSet) {
-  whatToBeChanged.style.fill = colorSet[Math.floor(Math.random() * colorSet.length)];
-  return whatToBeChanged.style.fill;
+function setNewColor(colorSet) {
+  return colorSet[Math.floor(Math.random() * colorSet.length)];
 }
 
-function openOrClose(window, flag, hideClassName) {
-  //flag = true - скрой. А flag = false - покажи
-  if (flag && !window.classList.contains(hideClassName)) {
-    window.classList.add(hideClassName);
-  }
-  if (!flag && window.classList.contains(hideClassName)) {
-    window.classList.remove(hideClassName);
-  }
+function openOrClose(windowToOperate, flag, hideClassName) {
+  windowToOperate.classList.toggle(hideClassName, flag);
 }
 
 setup.openButton.addEventListener('click', function() {
@@ -55,13 +48,13 @@ setup.closeButton.addEventListener('click', function() {
 });
 
 wizard.cloak.htmlNode.addEventListener('click', function() {
-  setNewColor(wizard.cloak.htmlNode, wizard.cloak.color);
+  this.style.fill = setNewColor(wizard.cloak.color);
 });
 
 wizard.eyes.htmlNode.addEventListener('click', function() {
-  setNewColor(wizard.eyes.htmlNode, wizard.eyes.color);
+  this.style.fill = setNewColor(wizard.eyes.color);
 });
 
 wizard.fireball.htmlNode.addEventListener('click', function() {
-  wizard.fireball.htmlNode.style.backgroundColor = setNewColor(wizard.fireball.htmlNode, wizard.fireball.color);
+  wizard.fireball.htmlNode.style.backgroundColor = setNewColor(wizard.fireball.color);
 });

@@ -61,13 +61,16 @@ function checkTheKey(evtKeyDown, btnKeyCode) {
   return false;
 }
 
-setup.openButton.addEventListener('click', function() {
+setup.openButton.addEventListener('click', function(evt) {
   openOrClose(setup.setupWindow, false, INVISIBLE_CLASS);
+  evt.target.setAttribute('aria-pressed', 'true');
 });
 
 setup.openButton.addEventListener('keydown', function(evt) {
   if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
     openOrClose(setup.setupWindow, false, INVISIBLE_CLASS);
+    evt.target.setAttribute('aria-pressed', 'true');
+    //я еще поставил на установку при нажатии, но приудалении как-то очень нестройной получается
   }
 });
 

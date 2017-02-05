@@ -39,13 +39,14 @@ function setNewColor(colorSet) {
   return colorSet[Math.floor(Math.random() * colorSet.length)];
 }
 
+function closeOnEsc(evt) {
+  if (checkTheKey(evt.keyCode, ESC_KEY_CODE)) {
+    openOrClose(windowToOperate, true, hideClassName);
+  }
+}
+
 function openOrClose(windowToOperate, flag, hideClassName) {
   windowToOperate.classList.toggle(hideClassName, flag);
-  function closeOnEsc(evt) {
-    if (checkTheKey(evt.keyCode, ESC_KEY_CODE)) {
-      openOrClose(windowToOperate, true, hideClassName);
-    }
-  }
   if (flag) {
     document.removeEventListener('keydown', closeOnEsc);
   } else {

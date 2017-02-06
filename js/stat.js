@@ -1,6 +1,6 @@
 'use strict';
 
-function createBubble (bubble, canvas) {
+function createBubble(bubble, canvas) {
   canvas.fillStyle = bubble.SHADOW_COLOR;
   canvas.fillRect(bubble.POS_X + 10, bubble.POS_Y + 10, bubble.WIDTH, bubble.HEIGHT);
   canvas.fillStyle = bubble.COLOR;
@@ -33,10 +33,10 @@ function newColumn(name, result, colNumber, chart, times, canvas, column) {
   canvas.fillRect(setX(colNumber, column), chart.COOR_Y + chart.HEIGHT - columnHeight, column.WIDTH, columnHeight);
   canvas.fillStyle = 'rgb(0, 0, 0)';
   canvas.fillText(Math.floor(result), setX(colNumber, column), chart.COOR_Y + chart.HEIGHT + column.SPACING_TOP - columnHeight);
-  canvas.fillText(name, setX(colNumber, column),chart.COOR_Y + chart.HEIGHT + column.SPACING_BOTTOM);
+  canvas.fillText(name, setX(colNumber, column), chart.COOR_Y + chart.HEIGHT + column.SPACING_BOTTOM);
 }
 
-window.renderStatistics = function(ctx, names, times) {
+window.renderStatistics = function (ctx, names, times) {
   var CHART = {
     HEIGHT: 110,
     COOR_Y: 110

@@ -39,12 +39,6 @@ function setNewColor(colorSet) {
   return colorSet[Math.floor(Math.random() * colorSet.length)];
 }
 
-function closeOnEsc(evt) {
-  if (checkTheKey(evt.keyCode, ESC_KEY_CODE)) {
-    openOrClose(windowToOperate, true, hideClassName);
-  }
-}
-
 function openOrClose(windowToOperate, flag, hideClassName) {
   windowToOperate.classList.toggle(hideClassName, flag);
   if (flag) {
@@ -53,77 +47,80 @@ function openOrClose(windowToOperate, flag, hideClassName) {
     document.addEventListener('keydown', closeOnEsc);
   }
 
+  function closeOnEsc(evt) {
+    if (checkTheKey(evt.keyCode, ESC_KEY_CODE)) {
+      openOrClose(windowToOperate, true, hideClassName);
+    }
+  }
 }
 
 function checkTheKey(evtKeyDown, btnKeyCode) {
-  if (evtKeyDown && evtKeyDown === btnKeyCode) {
-    return true;
-  }
-  return false;
+  return evtKeyDown && evtKeyDown === btnKeyCode;
 }
 
-setup.openButton.addEventListener('click', function(evt) {
+setup.openButton.addEventListener('click', function (evt) {
   openOrClose(setup.setupWindow, false, INVISIBLE_CLASS);
   evt.target.setAttribute('aria-pressed', 'true');
+  setup.closeButton.setAttribute('aria-pressed', 'false');
 });
 
-setup.openButton.addEventListener('keydown', function(evt) {
+setup.openButton.addEventListener('keydown', function (evt) {
   if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
     openOrClose(setup.setupWindow, false, INVISIBLE_CLASS);
     evt.target.setAttribute('aria-pressed', 'true');
-    //я еще поставил на установку при нажатии, но приудалении как-то очень нестройной получается
+    setup.closeButton.setAttribute('aria-pressed', 'false');
   }
 });
 
-setup.closeButton.addEventListener('click', function() {
+setup.closeButton.addEventListener('click', function (evt) {
   openOrClose(setup.setupWindow, true, INVISIBLE_CLASS);
+  evt.target.setAttribute('aria-pressed', 'false');
+  setup.openButton.setAttribute('aria-pressed', 'false');
 });
 
-setup.closeButton.addEventListener('keydown', function(evt) {
+setup.closeButton.addEventListener('keydown', function (evt) {
   if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
     openOrClose(setup.setupWindow, true, INVISIBLE_CLASS);
   }
+  evt.target.setAttribute('aria-pressed', 'false');
+  setup.openButton.setAttribute('aria-pressed', 'false');
 });
 
-wizard.cloak.htmlNode.addEventListener('click', function() {
-  this.style.fill = setNewColor(wizard.cloak.color);
+wizard.cloak.htmlNode.addEventListener('click', function () {
+  wizard.cloak.htmlNode.style.fill = setNewColor(wizard.cloak.color);
 });
 
-wizard.cloak.htmlNode.addEventListener('keydown', function(evt) {
+wizard.cloak.htmlNode.addEventListener('keydown', function (evt) {
   if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
-    this.style.fill = setNewColor(wizard.cloak.color);
+    wizard.cloak.htmlNode.style.fill = setNewColor(wizard.cloak.color);
   }
 });
 
-wizard.eyes.htmlNode.addEventListener('click', function() {
-  this.style.fill = setNewColor(wizard.eyes.color);
+wizard.eyes.htmlNode.addEventListener('click', function () {
+  wizard.eyes.htmlNode.style.fill = setNewColor(wizard.eyes.color);
 });
 
-wizard.eyes.htmlNode.addEventListener('keydown', function(evt) {
+wizard.eyes.htmlNode.addEventListener('keydown', function (evt) {
   if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
-    this.style.fill = setNewColor(wizard.eyes.color);
+    wizard.eyes.htmlNode.style.fill = setNewColor(wizard.eyes.color);
   }
 });
 
-wizard.fireball.htmlNode.addEventListener('click', function() {
+wizard.fireball.htmlNode.addEventListener('click', function () {
   wizard.fireball.htmlNode.style.backgroundColor = setNewColor(wizard.fireball.color);
 });
 
-wizard.fireball.htmlNode.addEventListener('keydown', function(evt) {
+wizard.fireball.htmlNode.addEventListener('keydown', function (evt) {
   if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
     wizard.fireball.htmlNode.style.backgroundColor = setNewColor(wizard.fireball.color);
   }
 });
 
-
-//Я дописал код, который расположен ниже, НО кнопка Сохранить - это submit формы, так зачем добавлять еще обработчики,
-//Если все равно submit приводит к обновлению страницы? Я понимаю, что потом будет JSONP, но сейчас даже проверять неудобно
-
-setup.saveButton.addEventListener('click', function() {
+setup.saveButton.addEventListener('click', function () {
   openOrClose(setup.setupWindow, true, INVISIBLE_CLASS);
 });
 
-setup.saveButton.addEventListener('keydown', function(evt) {
+setup.saveButton.addEventListener('keydown', function (evt) {
   if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
     openOrClose(setup.setupWindow, true, INVISIBLE_CLASS);
   }

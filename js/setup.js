@@ -86,35 +86,9 @@ setup.closeButton.addEventListener('keydown', function (evt) {
   setup.openButton.setAttribute('aria-pressed', 'false');
 });
 
-wizard.cloak.htmlNode.addEventListener('click', function () {
-  wizard.cloak.htmlNode.style.fill = setNewColor(wizard.cloak.color);
-});
-
-wizard.cloak.htmlNode.addEventListener('keydown', function (evt) {
-  if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
-    wizard.cloak.htmlNode.style.fill = setNewColor(wizard.cloak.color);
-  }
-});
-
-wizard.eyes.htmlNode.addEventListener('click', function () {
-  wizard.eyes.htmlNode.style.fill = setNewColor(wizard.eyes.color);
-});
-
-wizard.eyes.htmlNode.addEventListener('keydown', function (evt) {
-  if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
-    wizard.eyes.htmlNode.style.fill = setNewColor(wizard.eyes.color);
-  }
-});
-
-wizard.fireball.htmlNode.addEventListener('click', function () {
-  wizard.fireball.htmlNode.style.backgroundColor = setNewColor(wizard.fireball.color);
-});
-
-wizard.fireball.htmlNode.addEventListener('keydown', function (evt) {
-  if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
-    wizard.fireball.htmlNode.style.backgroundColor = setNewColor(wizard.fireball.color);
-  }
-});
+window.colorizeElement(wizard.cloak.htmlNode, wizard.cloak.color, 'fill');
+window.colorizeElement(wizard.eyes.htmlNode, wizard.eyes.color, 'fill');
+window.colorizeElement(wizard.fireball.htmlNode, wizard.fireball.color, 'background-color');
 
 setup.saveButton.addEventListener('click', function () {
   openOrClose(setup.setupWindow, true, INVISIBLE_CLASS);

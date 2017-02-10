@@ -4,9 +4,6 @@
 
 'use strict';
 
-var ENTER_KEY_CODE = 13;
-var ESC_KEY_CODE = 27;
-
 var setup = {
   setupWindow: document.querySelector('.setup'),
   openButton: document.querySelector('.setup-open'),
@@ -35,10 +32,6 @@ var INVISIBLE_CLASS = 'invisible';
 setup.nameField.required = true;
 setup.nameField.maxLength = 50;
 
-function setNewColor(colorSet) {
-  return colorSet[Math.floor(Math.random() * colorSet.length)];
-}
-
 function openOrClose(windowToOperate, flag, hideClassName) {
   windowToOperate.classList.toggle(hideClassName, flag);
   if (flag) {
@@ -48,14 +41,10 @@ function openOrClose(windowToOperate, flag, hideClassName) {
   }
 
   function closeOnEsc(evt) {
-    if (checkTheKey(evt.keyCode, ESC_KEY_CODE)) {
+    if (window.utils.checkTheKey(evt.keyCode, window.utils.ESC_KEY_CODE)) {
       openOrClose(windowToOperate, true, hideClassName);
     }
   }
-}
-
-function checkTheKey(evtKeyDown, btnKeyCode) {
-  return evtKeyDown && evtKeyDown === btnKeyCode;
 }
 
 setup.openButton.addEventListener('click', function (evt) {
@@ -65,7 +54,7 @@ setup.openButton.addEventListener('click', function (evt) {
 });
 
 setup.openButton.addEventListener('keydown', function (evt) {
-  if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
+  if (window.utils.checkTheKey(evt.keyCode, window.utils.ENTER_KEY_CODE)) {
     openOrClose(setup.setupWindow, false, INVISIBLE_CLASS);
     evt.target.setAttribute('aria-pressed', 'true');
     setup.closeButton.setAttribute('aria-pressed', 'false');
@@ -79,7 +68,7 @@ setup.closeButton.addEventListener('click', function (evt) {
 });
 
 setup.closeButton.addEventListener('keydown', function (evt) {
-  if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
+  if (window.utils.checkTheKey(evt.keyCode, window.utils.ENTER_KEY_CODE)) {
     openOrClose(setup.setupWindow, true, INVISIBLE_CLASS);
   }
   evt.target.setAttribute('aria-pressed', 'false');
@@ -95,7 +84,7 @@ setup.saveButton.addEventListener('click', function () {
 });
 
 setup.saveButton.addEventListener('keydown', function (evt) {
-  if (checkTheKey(evt.keyCode, ENTER_KEY_CODE)) {
+  if (window.utils.checkTheKey(evt.keyCode, window.utils.ENTER_KEY_CODE)) {
     openOrClose(setup.setupWindow, true, INVISIBLE_CLASS);
   }
 });

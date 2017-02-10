@@ -3,13 +3,13 @@
  */
 'use strict';
 
-function colorizeElement (element, colors, property) {
+window.colorizeElement = function (element, colors, property) {
   element.addEventListener('click', function () {
     element.style[property] = window.utils.getRandomElementExcept(colors, element.style[property]);
   });
-  element.addEventListener('keydown', function(evt) {
-    if (window.checkTheKey(evt.keyCode, window.ENTER_KEY_CODE)) {
+  element.addEventListener('keydown', function (evt) {
+    if (window.utils.checkTheKey(evt.keyCode, window.utils.ENTER_KEY_CODE)) {
       element.style[property] = window.utils.getRandomElementExcept(colors, element.style[property]);
     }
   });
-}
+};

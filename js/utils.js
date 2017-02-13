@@ -15,7 +15,7 @@ window.utils = (function () {
     getRandomElementExcept: function (arr, elementToExclude) {
       var elementToReturn = getRandomElement(arr);
       if (elementToExclude === elementToReturn) {
-        this.getRandomElementExcept(arr, elementToExclude);
+        elementToReturn = this.getRandomElementExcept(arr, elementToExclude);
       }
       return elementToReturn;
     },

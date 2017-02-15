@@ -29,22 +29,23 @@ var wizard = {
 };
 
 var INVISIBLE_CLASS = 'invisible';
+var openedWithKeyBoard;
 
 setup.nameField.required = true;
 setup.nameField.maxLength = 50;
 
-function openOrClose(windowToOperate, flag, hideClassName, callBack, keyboardinitiated) {
+function openOrClose(windowToOperate, flag, hideClassName, keyboardinitiated, callBack) {
   windowToOperate.classList.toggle(hideClassName, flag);
   if (flag) {
     document.removeEventListener('keydown', closeOnEsc);
   } else {
     document.addEventListener('keydown', closeOnEsc);
-    window.openedWithKeyBoard = keyboardinitiated;
+    openedWithKeyBoard = keyboardinitiated;
   }
 
-  if (typeof callBack === 'function' && window.openedWithKeyBoard) {
+  if (typeof callBack === 'function' && openedWithKeyBoard) {
     callBack();
-    window.openedWithKeyBoard = false;
+    openedWithKeyBoard = false;
   }
 
   function closeOnEsc(evt) {
@@ -59,35 +60,35 @@ function setFocusOnOpenBtn() {
 }
 
 setup.openButton.addEventListener('click', function (evt) {
-  openOrClose(setup.setupWindow, false, INVISIBLE_CLASS, null, false);
+  openOrClose(setup.setupWindow, false, INVISIBLE_CLASS, false);
   evt.target.setAttribute('aria-pressed', 'true');
   setup.closeButton.setAttribute('aria-pressed', 'false');
 });
 
 setup.openButton.addEventListener('keydown', function (evt) {
   if (window.utils.checkTheKey(evt.keyCode, window.utils.ENTER_KEY_CODE)) {
-    openOrClose(setup.setupWindow, false, INVISIBLE_CLASS, null, true);
+    openOrClose(setup.setupWindow, false, INVISIBLE_CLASS, true);
     evt.target.setAttribute('aria-pressed', 'true');
     setup.closeButton.setAttribute('aria-pressed', 'false');
   }
 });
 
 setup.closeButton.addEventListener('click', function (evt) {
-  openOrClose(setup.setupWindow, true, INVISIBLE_CLASS, setFocusOnOpenBtn, window.openedWithKeyBoard);
+  openOrClose(setup.setupWindow, true, INVISIBLE_CLASS, openedWithKeyBoard, setFocusOnOpenBtn);
   evt.target.setAttribute('aria-pressed', 'false');
   setup.openButton.setAttribute('aria-pressed', 'false');
 });
 
 setup.closeButton.addEventListener('keydown', function (evt) {
   if (window.utils.checkTheKey(evt.keyCode, window.utils.ENTER_KEY_CODE)) {
-    openOrClose(setup.setupWindow, true, INVISIBLE_CLASS, setFocusOnOpenBtn, window.openedWithKeyBoard);
+    openOrClose(setup.setupWindow, true, INVISIBLE_CLASS, openedWithKeyBoard, setFocusOnOpenBtn);
   }
   evt.target.setAttribute('aria-pressed', 'false');
   setup.openButton.setAttribute('aria-pressed', 'false');
 });
 
-function colorizeCallback(htmlNode, property, colorSet) {
-  htmlNode.style[property] = window.utils.getRandomElementExcept(colorSet, htmlNode.style[property]);
+function colorizeCallback(htmlNode, property, color) {
+  htmlNode.style[property] = color;
 }
 
 window.colorizeElement(wizard.cloak.htmlNode, wizard.cloak.color, 'fill', colorizeCallback);

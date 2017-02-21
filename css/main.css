@@ -670,9 +670,32 @@ input[type=radio]:checked + .review-mark-label {
   border-right-width: 1px;
 }
 
+.setup-similar {
+  position: absolute;
+  bottom: 30px;
+  left: 50px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  width: 340px;
+  height: 60px;
+}
+
+.other-mage-unit {
+  width: 60px;
+  height: 100%;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.other-mage-unit:last-child {
+  margin-right: 0;
+}
+
 .setup-submit {
   position: absolute;
-  left: 50%;
+  left: 80%;
   bottom: 30px;
 
   transform: translateX(-50%);

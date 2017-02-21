@@ -28,8 +28,10 @@ var wizard = {
   }
 };
 
+var OTHER_WIZARDS_URL = 'https://intensive-javascript-server-myophkugvq.now.sh/code-and-magick/data';
 var INVISIBLE_CLASS = 'invisible';
 var openedWithKeyBoard;
+var otherWizardsField = document.querySelector('.setup-similar');
 
 setup.nameField.required = true;
 setup.nameField.maxLength = 50;
@@ -103,4 +105,11 @@ setup.saveButton.addEventListener('keydown', function (evt) {
   if (window.utils.checkTheKey(evt.keyCode, window.utils.ENTER_KEY_CODE)) {
     openOrClose(setup.setupWindow, true, INVISIBLE_CLASS);
   }
+});
+
+window.load(OTHER_WIZARDS_URL, function(wizards) {
+  var newWizard = document.createElement('DIV');
+  //newWizard.innerHTML = wizards[0].name;
+  newWizard.classList.add('other-mage-unit');
+  otherWizardsField.appendChild(newWizard);
 });
